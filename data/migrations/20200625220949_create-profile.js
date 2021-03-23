@@ -8,6 +8,8 @@ exports.up = (knex) => {
       table.string('email');
       table.string('name');
       table.string('avatarUrl');
+      table.string('username');
+      table.number('zip_code');
       table.timestamps(true, true);
     })
     .createTable('cities', function (table) {
@@ -30,6 +32,56 @@ exports.up = (knex) => {
       .inTable('profiles')
       .onUpdate('CASCADE')
       .onDelete('CASCADE');     
+    })
+    .createTable('posts', function (table) {
+      table.number('id').notNullable().unique().primary();
+      table.string('body');
+      table.string('profile_id')
+      .unsigned()
+      .notNullable()
+      .references('id')
+      .inTable('profiles')
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE');
+      table.timestamps(true, true);
+    })
+    .createTable('comments', function (table) {
+      table.number('id').notNullable().unique().primary();
+      table.string('body');
+      table.string('post_id')
+      .unsigned()
+      .notNullable()
+      .references('id')
+      .inTable('posts')
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE');
+      table.string('profile_id')
+      .unsigned()
+      .notNullable()
+      .references('id')
+      .inTable('profiles')
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE');
+      table.timestamps(true, true);
+    })
+    .createTable('comment_replies', function (table) {
+      table.number('id').notNullable().unique().primary();
+      table.string('body');
+      table.string('comment_id')
+      .unsigned()
+      .notNullable()
+      .references('id')
+      .inTable('comments')
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE');
+      table.string('profile_id')
+      .unsigned()
+      .notNullable()
+      .references('id')
+      .inTable('profiles')
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE');
+      table.timestamps(true, true);
     })
 };
 
