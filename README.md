@@ -44,7 +44,8 @@ https://labspt15-cityspire-g.herokuapp.com/
 
 # APIs
 
-https://documenter.getpostman.com/view/12494179/TW74jkQq
+[Postman](https://documenter.getpostman.com/view/3607609/TzCJdoko)
+[Swagger](https://app.swaggerhub.com/apis-docs/abhitsahota/LabsPT17-CitySpire-C/1.0.0)
 
 ## Getting Started
 
@@ -129,4 +130,4 @@ Remember that this project is licensed under the MIT license, and by submitting 
 
 ## Documentation
 
-See [Backend Documentation](🚫*link to your backend API SWAGGER DOCS here*) for details on the backend of our project.
+See [Backend Documentation](https://app.swaggerhub.com/apis-docs/abhitsahota/LabsPT17-CitySpire-C/1.0.0) for details on the backend of our project.
