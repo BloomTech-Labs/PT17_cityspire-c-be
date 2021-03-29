@@ -5,11 +5,11 @@ exports.up = (knex) => {
     .raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"')
     .createTable('profiles', function (table) {
       table.string('id').notNullable().unique().primary();
-      table.string('email');
+      table.string('email').unique();
       table.string('name');
       table.string('avatarUrl');
-      table.string('username');
-      table.number('zip_code');
+      table.string('username').unique();
+      table.string('zip_code');
       table.timestamps(true, true);
     })
     .createTable('cities', function (table) {
@@ -25,67 +25,35 @@ exports.up = (knex) => {
       table.float('livability');
       table.float('latitude');
       table.float('longitude');
-      table.string('profile_id')
-      .unsigned()
-      .notNullable()
-      .references('id')
-      .inTable('profiles')
-      .onUpdate('CASCADE')
-      .onDelete('CASCADE');     
+      table.string('profile_id').unsigned().notNullable().references('id').inTable('profiles').onUpdate('CASCADE').onDelete('CASCADE');     
     })
     .createTable('posts', function (table) {
-      table.number('id').notNullable().unique().primary();
+      table.increments();
       table.string('body');
-      table.string('profile_id')
-      .unsigned()
-      .notNullable()
-      .references('id')
-      .inTable('profiles')
-      .onUpdate('CASCADE')
-      .onDelete('CASCADE');
+      table.string('profile_id').unsigned().notNullable().references('id').inTable('profiles').onUpdate('CASCADE').onDelete('CASCADE');
       table.timestamps(true, true);
     })
     .createTable('comments', function (table) {
-      table.number('id').notNullable().unique().primary();
+      table.increments();
       table.string('body');
-      table.string('post_id')
-      .unsigned()
-      .notNullable()
-      .references('id')
-      .inTable('posts')
-      .onUpdate('CASCADE')
-      .onDelete('CASCADE');
-      table.string('profile_id')
-      .unsigned()
-      .notNullable()
-      .references('id')
-      .inTable('profiles')
-      .onUpdate('CASCADE')
-      .onDelete('CASCADE');
+      table.integer('post_id').unsigned().notNullable().references('id').inTable('posts').onUpdate('CASCADE').onDelete('CASCADE');
+      table.string('profile_id').unsigned().notNullable().references('id').inTable('profiles').onUpdate('CASCADE').onDelete('CASCADE');
       table.timestamps(true, true);
     })
     .createTable('comment_replies', function (table) {
-      table.number('id').notNullable().unique().primary();
+      table.increments();
       table.string('body');
-      table.string('comment_id')
-      .unsigned()
-      .notNullable()
-      .references('id')
-      .inTable('comments')
-      .onUpdate('CASCADE')
-      .onDelete('CASCADE');
-      table.string('profile_id')
-      .unsigned()
-      .notNullable()
-      .references('id')
-      .inTable('profiles')
-      .onUpdate('CASCADE')
-      .onDelete('CASCADE');
+      table.integer('comment_id').unsigned().notNullable().references('id').inTable('comments').onUpdate('CASCADE').onDelete('CASCADE');
+      table.string('profile_id').unsigned().notNullable().references('id').inTable('profiles').onUpdate('CASCADE').onDelete('CASCADE');
       table.timestamps(true, true);
     })
 };
 
 exports.down = (knex) => {
   return knex.schema
-  .dropTableIfExists('cities').dropTableIfExists('profiles');
+  .dropTableIfExists('comment_replies')
+  .dropTableIfExists('comments')
+  .dropTableIfExists('posts')
+  .dropTableIfExists('cities')
+  .dropTableIfExists('profiles');
 };

@@ -18,3 +18,5 @@ exports.seed = function (knex) {
       return knex('profiles').insert(profiles);
     });
 };
+
+
