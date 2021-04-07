@@ -149,4 +149,15 @@ router.delete('/:id/city/:city_id', async (req, res, next) => {
   }
 });
 
+router.get('/favourites', async (req, res) => {
+  Profiles.findFavourites()
+    .then((favs) => {
+      res.status(200).json(favs);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ message: err.message });
+    });
+});
+
 module.exports = router;

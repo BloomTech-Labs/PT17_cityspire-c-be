@@ -66,6 +66,10 @@ const deleteCity = async (id) => {
     .del();
 };
 
+const findFavourites = async () => {
+  return await db('profiles');
+};
+
 module.exports = {
   findAll,
   findBy,
@@ -76,4 +80,5 @@ module.exports = {
   findOrCreateProfile,
   findCities,
   deleteCity,
+  findFavourites,
 };
