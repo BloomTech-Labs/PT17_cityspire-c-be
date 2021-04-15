@@ -66,8 +66,37 @@ const deleteCity = async (id) => {
     .del();
 };
 
-const findFavourites = async () => {
-  return await db('profiles');
+// pulls the fav cities which returns as a json objectives for the user ID
+const findFavourites = async (id) => {
+  return await db('profiles').where({ id: id }).column('favs');
+};
+
+// add a new fav city for a user
+const addFavourite = async (id, place) => {
+  let currFavs = await db('profiles').where({ id: id }).column('favs');
+  return await db('profiles')
+    .where({ id: id })
+    .column('favs')
+    .insert(currFavs.append([place.city, place.state]));
+};
+// removes a fav city for a user
+const removeFavourite = async (id, place) => {
+  let currFavs = await db('profiles').where({ id: id }).column('favs');
+  let i = 0;
+  let ind = null;
+  for (i = 0; i < currFavs.length(); i++) {
+    if (place.city == currFavs[i][0] && place.state == currFavs[i][2]) {
+      ind = i;
+      break;
+    }
+  }
+  if (ind != null) {
+    delete currFavs[ind];
+  } else {
+    return false;
+  }
+  await db('profiles').where({ id: id }).column('favs').del();
+  return await db('profiles').where({ id: id }).column('favs').insert(currFavs);
 };
 
 module.exports = {
@@ -81,4 +110,6 @@ module.exports = {
   findCities,
   deleteCity,
   findFavourites,
+  addFavourite,
+  removeFavourite,
 };
