@@ -149,4 +149,42 @@ router.delete('/:id/city/:city_id', async (req, res, next) => {
   }
 });
 
+router.get('/favourites', async (req, res) => {
+  const id = req.params.id;
+  Profiles.findFavourites(id)
+    .then((favs) => {
+      res.status(200).json(favs);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ message: err.message });
+    });
+});
+
+router.post('/favourites', async (req, res) => {
+  const id = req.params.id;
+  const place = [req.params.city, req.params.state];
+  Profiles.addFavourite(id, place)
+    .then((favs) => {
+      res.status(200).json(favs);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ message: err.message });
+    });
+});
+
+router.delete('/favourites', async (req, res) => {
+  const id = req.params.id;
+  const place = [req.params.city, req.params.state];
+  Profiles.removeFavourite(id, place)
+    .then((favs) => {
+      res.status(200).json(favs);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ message: err.message });
+    });
+});
+
 module.exports = router;
