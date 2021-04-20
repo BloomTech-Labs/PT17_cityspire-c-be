@@ -1,6 +1,6 @@
 const express = require('express');
 // const authRequired = require('../middleware/authRequired');
-const request = require('request');
+// const request = require('request');
 const Cities = require('./cityModel');
 const router = express.Router();
 
