@@ -1,5 +1,6 @@
 const express = require('express');
 // const authRequired = require('../middleware/authRequired');
+const request = require('request');
 const Cities = require('./cityModel');
 const router = express.Router();
 
@@ -72,5 +73,57 @@ router.delete('/:id', function (req, res) {
     });
   }
 });
+
+// router.post('/:id/population', function(req, res) {
+//      const options = {
+//        url: 'http://cityspire-c-ds2.eba-qj3gpkjb.us-east-1.elasticbeanstalk.com/',
+//        body: req.body
+//       }
+//      request.post(options, (error, response, body) => {
+//          if(error) {
+//            res.status(500).json({
+//              message: 'Could not get population'
+//              error: error 
+//            })
+//           } else {
+//              res.status(200).json(body)
+//           }
+//      })
+//   
+//}
+// router.post('/:id/pollution', function(req, res) {
+//   try {
+    
+//   } catch (err) {
+//     res.status(500).json({
+//       message: 'Could not get pollution statistics'
+//     })
+//   }
+// })
+// router.post('/:id/weather', function(req, res) {
+//   try {
+    
+//   } catch (err) {
+//     res.status(500).json({
+//       message: 'Could not get weather statistics'
+//     })
+//   }
+// })
+// router.post('/:id/crimelevel', function(req, res) {
+//   const options = {
+//        url: 'http://cityspire-c-ds2.eba-qj3gpkjb.us-east-1.elasticbeanstalk.com/',
+//        body: req.body
+//       }
+//      request.post(options, (error, response, body) => {
+//          if(error) {
+//            res.status(500).json({
+//              message: 'Could not get crime rate'
+//              error: error 
+//            })
+//           } else {
+//              res.status(200).json(body)
+//           }
+//      })
+// })
 
 module.exports = router;
